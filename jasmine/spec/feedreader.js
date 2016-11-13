@@ -16,28 +16,35 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-        it('feed URLs are defined', function() {
-            allFeeds.forEach(function(feed) {
-                expect(feed.url).toBeDefined();
-                expect(feed.url.length).not.toBe(0);
-            })
+        /**
+         * We are testing whether the feed propery is defined
+         * we will wrap it method in for loop to verify each feed individually to see which feed fails
+         * @param {Object} feed
+         * @param {String} property
+         * @return {Number} sum
+         */
+        function testEachFeedDefinition(feed, property) {
+            it('feed\'s with id=' + feed['id'] + ' ' + property + ' is defined', function() {
+                expect(feed[property]).toBeDefined();
+                expect(feed[property].length).not.toBe(0);
+            });
+        }
+
+        // Loop to verify each feed in allFeeds
+        allFeeds.forEach(function(feed) {
+            testEachFeedDefinition(feed, 'url');
+            testEachFeedDefinition(feed, 'name');
         });
 
-        it('feed names are defined', function() {
-            allFeeds.forEach(function(feed) {
-                expect(feed.name).toBeDefined();
-                expect(feed.name.length).not.toBe(0);
-            })
-        });
     });
 
     describe('The menu', function() {
 
-        it('menu is hidden by default', function() {
+        it('is hidden by default', function() {
             expect($('body').hasClass('menu-hidden')).toEqual(true);
         });
 
-        it('menu is visible on click', function() {
+        it('is visible on click', function() {
             var menuIcon = $('.menu-icon-link');
 
             menuIcon.click();
